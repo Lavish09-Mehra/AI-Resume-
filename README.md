@@ -173,7 +173,7 @@ AI Resume/
 ### 1️⃣ Clone
 
 ```bash
-git clone https://github.com/Lavish09_Mehra/ai-resume-checker.git
+git clone https://github.com/Lavish09-Mehra/ai-resume-checker.git
 cd ai-resume-checker
 ```
 
@@ -307,12 +307,12 @@ Contributions, issues and feature requests are welcome!
 
 <div align="center">
 
-<img src="https://github.com/Lavish09_Mehra.png?size=140" alt="Lavish Mehra" width="140" style="border-radius:50%;" />
+<img src="https://github.com/Lavish09-Mehra.png?size=140" alt="Lavish Mehra" width="140" style="border-radius:50%;" />
 
 ### **Lavish Mehra**
 *Full-Stack Developer · Building AI-powered tools*
 
-[![GitHub](https://img.shields.io/badge/GitHub-Lavish09-Mehra-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Lavish09-Mehra)
+[![GitHub](https://img.shields.io/badge/GitHub-Lavish09--Mehra-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Lavish09-Mehra)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-lavish09dev-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lavish09dev)
 [![Email](https://img.shields.io/badge/Contact-Reach%20out-ff6b6b?style=for-the-badge&logo=gmail&logoColor=white)](https://github.com/Lavish09-Mehra)
 
