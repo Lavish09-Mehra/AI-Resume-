@@ -312,9 +312,9 @@ Contributions, issues and feature requests are welcome!
 ### **Lavish Mehra**
 *Full-Stack Developer · Building AI-powered tools*
 
-[![GitHub](https://img.shields.io/badge/GitHub-Lavish09__Mehra-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Lavish09_Mehra)
+[![GitHub](https://img.shields.io/badge/GitHub-Lavish09-Mehra-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Lavish09-Mehra)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-lavish09dev-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lavish09dev)
-[![Email](https://img.shields.io/badge/Contact-Reach%20out-ff6b6b?style=for-the-badge&logo=gmail&logoColor=white)](https://github.com/Lavish09_Mehra)
+[![Email](https://img.shields.io/badge/Contact-Reach%20out-ff6b6b?style=for-the-badge&logo=gmail&logoColor=white)](https://github.com/Lavish09-Mehra)
 
 *If you found this helpful, drop a ⭐ on the repo — it really helps!*
 
