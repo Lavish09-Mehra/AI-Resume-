@@ -1,0 +1,124 @@
+/* Import a clean modern font */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Premium Textured Background */
+.SignIn-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #121214;
+    /* Subtle radial gradient overlay combined with a noise/mesh texture feel */
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(50, 50, 55, 0.4) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(30, 30, 35, 0.6) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(20, 20, 22, 1) 100%);
+    background-size: cover;
+    padding: 20px;
+}
+
+/* Title */
+.signIn-title {
+    color: #f4f4f6;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+/* Main Box Tuned with Premium Grey Tones */
+.signIn-input {
+    width: 100%;
+    max-width: 420px;
+    background: linear-gradient(145deg, #1e1e24, #18181c);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Welcome Message */
+.msg {
+    color: #9898a0;
+    font-size: 14px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+/* Inner container holds the form fields */
+.inner-Div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels */
+.username-signIn,
+.pass-signIn {
+    color: #c0c0c8;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+}
+
+/* Input Fields */
+.username-signin,
+.pass-signin {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: #141416;
+    border: 1px solid #2a2a30;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.username-signin:focus,
+.pass-signin:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    background-color: #18181c;
+}
+
+/* Submit Button */
+.btn-signIn {
+    width: 100%;
+    padding: 12px;
+    background: #f4f4f6;
+    color: #121214;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-signIn:hover {
+    background: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+.btn-signIn:active {
+    transform: translateY(0);
+}

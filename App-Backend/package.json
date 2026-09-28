@@ -1,0 +1,26 @@
+{
+  "name": "app-backend",
+  "version": "1.0.0",
+  "description": "AI resume Backend",
+  "license": "ISC",
+  "author": "Lavish Mehra",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.4",
+    "express": "^5.2.1",
+    "groq-sdk": "^1.6.0",
+    "jsonwebtoken": "^9.0.3",
+    "mammoth": "^1.13.0",
+    "mongoose": "^9.10.2",
+    "multer": "^2.4.0",
+    "pdf-parse": "^2.4.5",
+    "redis": "^4.7.1"
+  }
+}

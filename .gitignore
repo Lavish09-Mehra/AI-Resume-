@@ -1,0 +1,171 @@
+# ============================================================================
+#  AI Resume Checker — GLOBAL .gitignore
+# ----------------------------------------------------------------------------
+#  Root-level rules that apply to every package in this monorepo:
+#      med_learn/frontend   med_learn/backend
+#      med_app              App-Backend
+#
+#  Golden rule: secrets and user documents NEVER enter git.
+#  If you are ever unsure, run:      git status --ignored
+# ============================================================================
+
+
+# ============================================================================
+#  1. SECRETS  —  the most important block in this file
+# ----------------------------------------------------------------------------
+#  These files hold LIVE credentials. Committing them = instant leak, and
+#  once pushed they stay in git history even after you delete them.
+#
+#    App-Backend/.env          ->  GROQ_KEY, MONGO_API
+#    med_learn/backend/.env    ->  MONGO_URL, JWT_SECRET
+#
+#  Deploy secrets on Vercel instead:  Project -> Settings -> Environment Variables
+# ============================================================================
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# Key material / account files
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+id_rsa*
+id_ed25519*
+known_hosts
+credentials.json
+credentials.*.json
+serviceAccount*.json
+service-account*.json
+*gcloud*.json
+*firebase*-sdk*.json
+.secrets/
+
+
+# ============================================================================
+#  2. UPLOADED RESUME DATA  —  private user documents
+# ----------------------------------------------------------------------------
+#  Resumes are personal data. Multer drops uploads here before extraction,
+#  and Redis (with a 1-hour TTL) is the only intended store.
+# ============================================================================
+App-Backend/uploads/
+uploads/
+*.rdb
+dump.rdb
+appendonly.aof
+
+
+# ============================================================================
+#  3. DEPENDENCIES
+# ============================================================================
+node_modules/
+jspm_packages/
+.pnp/
+.pnp.js
+.yarn/cache
+.yarn/install-state.gz
+
+
+# ============================================================================
+#  4. BUILD OUTPUT
+# ============================================================================
+dist/
+dist-ssr/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.turbo/
+.cache/
+.parcel-cache/
+*.tsbuildinfo
+
+
+# ============================================================================
+#  5. VERCEL  /  DEPLOYMENT
+# ----------------------------------------------------------------------------
+#  .vercel/ contains your Project + Org IDs from `vercel link`.
+#  Set environment variables in the Vercel dashboard, never in git.
+# ============================================================================
+.vercel/
+.vercelignore
+now.json
+.netlify/
+firebase/
+
+
+# ============================================================================
+#  6. LOGS
+# ============================================================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.pid
+*.seed
+*.pid.lock
+
+
+# ============================================================================
+#  7. ENVIRONMENT / RUNTIME OVERRIDES
+# ============================================================================
+*.local
+*.env.local
+*.env.development.local
+*.env.production.local
+*.env.test.local
+
+
+# ============================================================================
+#  8. TEST & COVERAGE
+# ============================================================================
+coverage/
+*.lcov
+.nyc_output/
+htmlcov/
+jest.config.*
+__snapshots__/
+*.test.tsx.snap
+
+
+# ============================================================================
+#  9. EDITOR & OS
+# ============================================================================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+
+# ============================================================================
+#  10. TEMP / SCRATCH  (diagnostic scripts created while debugging)
+# ============================================================================
+_*.mjs
+_*.js
+_tmp/
+tmp/
+*.tmp
+*.bak
+*.orig
+*.rej
