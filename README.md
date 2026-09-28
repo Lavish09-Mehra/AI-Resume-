@@ -1,17 +1,25 @@
 <div align="center">
 
 <!-- ============ ANIMATED HEADER ============ -->
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=30&duration=3800&pause=1200&color=8B8BFF&center=true&vCenter=true&width=650&lines=AI+Resume+Checker;Upload.+Analyze.+Get+Hired.;Built+with+React+%2C+TypeScript+%26+Express" alt="AI Resume Checker typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=30&duration=3800&pause=1200&color=8B8BFF&center=true&vCenter=true&width=650&lines=AI+Resume+Checker;Upload.+Analyze.+Get+Hired.;Built+with+MERN+%2C+TypeScript+%26+Redis" alt="AI Resume Checker typing SVG" />
 
+![MERN](https://img.shields.io/badge/MERN-Stack-1A1A1A?style=flat-square&logo=mongodb&logoColor=47A248)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-5-000000?style=flat-square&logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?style=flat-square&logo=mongodb&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Users-47A248?style=flat-square&logo=mongodb&logoColor=white)
+![Redis](https://img.shields.io/badge/Resume%20Store-Redis-FF4438?style=flat-square&logo=redis&logoColor=white)
 ![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white)
 
-**A full-stack, ATS-powered resume analyzer that scores your resume out of 100, breaks down
-exactly what recruiters and applicant tracking systems look for, and tells you what to fix.**
+**A full-stack **MERN** (MongoDB · Express · React · Node) ATS-powered resume analyzer that scores
+your resume out of 100, breaks down exactly what recruiters and applicant tracking systems look for,
+and tells you what to fix.**
+
+> ### 🔐 Your resume is stored in **Redis** — never in MongoDB
+> Resume files and extracted text are held in **Redis** (in-memory, TTL-expiring) so the document
+> itself stays **out of the primary database**, expires on its own, and is purged after analysis.
+> MongoDB is used **only** for user accounts.
 
 <img src="https://capsule-render.vercel.app/api?type=wavenumber&color=0:6366f1,50:8b8bff,100:121214&height=120&section=footer&animation=fadeIn" alt="divider" />
 
@@ -50,6 +58,20 @@ Upload a resume → the AI scans ATS compatibility, keywords, structure and clar
 you get an **instant score out of 100** with a section-wise breakdown, a list of issues,
 a written verdict, and company suggestions.
 
+### 🔐 Data Storage Design (MERN + Redis)
+
+The stack is **MERN**, but storage is deliberately split so sensitive documents never
+land in the primary database:
+
+| Data | Store | Why |
+| :---: | :---: | --- |
+| Accounts — username, email, bcrypt-hashed password | **MongoDB** | Small durable records that must persist |
+| **Resume file + extracted text** | **Redis** | In-memory, **TTL-expiring**, purged after analysis |
+
+> ⚠️ **Resume data is never written to MongoDB.** Resumes go to **Redis**, where they can be
+> given a short time-to-live and dropped automatically — the document never becomes a
+> permanent row in the user database.
+
 ---
 
 ## ✨ Key Features
@@ -83,6 +105,7 @@ a written verdict, and company suggestions.
 ### ⚙️ Document Engine (`App-Backend`)
 - `multer` multipart uploads (streamed to `uploads/`)
 - **PDF → text** via `pdf-parse`, **DOCX → text** via `mammoth`
+- **🔐 Resumes go to Redis, never MongoDB** — in-memory + TTL, purged after analysis
 - Graceful `400` for unsupported MIME types, `500` on parse failures
 - CORS-enabled for the Vite dev servers
 
@@ -97,7 +120,7 @@ flowchart LR
         C["📄 Resume Checker<br/>med_app /App"] --> D["📊 Score Dashboard<br/>ScoreCardUI"]
     end
 
-    subgraph Auth["Auth API :3000"]
+    subgraph Auth["Auth API :3001"]
         E["Express + Mongoose<br/>JWT · bcrypt"]
     end
 
@@ -105,11 +128,17 @@ flowchart LR
         F["Express<br/>multer · pdf-parse · mammoth"]
     end
 
+    subgraph Store["Storage"]
+        M[("🗄️ MongoDB<br/>accounts only")]
+        R[("⚡ Redis<br/>resume + extracted text · TTL")]
+    end
+
     B -->|"POST /login · /sign-in"| E
     C -->|"POST /resume-analyze"| F
     F -->|"extracted text → score"| D
 
-    E --- G[("MongoDB<br/>users collection")]
+    E -->|"users · hashed pw"| M
+    F -.->|"🔐 resume → Redis<br/>never MongoDB"| R
 ```
 
 > **Flow:** Landing → create account → sign in → upload resume → text extraction →
@@ -135,7 +164,7 @@ AI Resume/
 │   │       └── App.tsx               # Router: / · /sign-in · /login
 │   └── backend/                      # Express + Mongoose + JWT
 │       ├── dataSchema/userSchema.js
-│       └── server.js                 # :3000
+│       └── server.js                 # :3001
 │
 ├── med_app/                          # The resume checker application
 │   └── src/
@@ -156,10 +185,13 @@ AI Resume/
 | --- | --- |
 | **Frontend** | React 19, TypeScript 6, Vite 8, React Router 7 |
 | **Styling** | Handcrafted CSS — CSS variables, grid, `backdrop-filter`, keyframes, `IntersectionObserver` |
+| **Stack** | **MERN** — MongoDB · Express · React · Node.js |
 | **Backend** | Node.js, Express 5 (ESM) |
-| **Database** | MongoDB via Mongoose 9 |
+| **User DB** | MongoDB via Mongoose 9 — accounts only |
+| **Resume store** | **Redis** — in-memory + TTL; resumes deliberately kept **out** of MongoDB |
 | **Auth** | JSON Web Tokens, bcryptjs |
 | **Documents** | multer, pdf-parse, mammoth |
+| **AI** | Groq (`openai/gpt-oss-20b`) with strict JSON-schema output |
 | **Quality** | ESLint 10, typescript-eslint, `tsc --noEmit` |
 
 ---
@@ -168,7 +200,8 @@ AI Resume/
 
 ### Prerequisites
 - **Node.js** ≥ 18 (with npm)
-- **MongoDB** — a local instance or an Atlas connection string
+- **MongoDB** — a local instance or an Atlas connection string *(user accounts only)*
+- **Redis** — a local instance on `6379` or a managed URL *(stores resumes, not MongoDB)*
 
 ### 1️⃣ Clone
 
@@ -192,7 +225,7 @@ JWT_SECRET=super-secret-change-me
 ```
 
 ```bash
-npm start          # → http://localhost:3000
+npm start          # → http://localhost:3001
 ```
 
 ### 3️⃣ Landing frontend (`med_learn/frontend`)
@@ -263,8 +296,16 @@ npm run dev        # → http://localhost:5174
 
 | Key | Required | Purpose |
 | --- | --- | --- |
-| `MONGO_URL` | ✅ | MongoDB connection string |
+| `MONGO_URL` | ✅ | MongoDB connection string — **user accounts only, never resumes** |
 | `JWT_SECRET` | ✅ | Secret used to sign/verify tokens |
+
+`App-Backend/.env`
+
+| Key | Required | Purpose |
+| --- | --- | --- |
+| `GROQ_KEY` | ✅ | LLM key used to score the resume |
+| `MONGO_API` | — | Reserved for the MongoDB connection |
+| `REDIS_URL` | 🚧 planned | Redis connection string — **where resumes are stored**, e.g. `redis://localhost:6379` |
 
 > ⚠️ Never commit `.env` — keep it out of git.
 
@@ -272,8 +313,12 @@ npm run dev        # → http://localhost:5174
 
 ## 📈 Roadmap
 
-- [ ] Wire `/resume-extract` → real AI scoring pipeline (LLM/keyword analysis)
-- [ ] Connect `ScoreCardUI` to live results instead of sample data
+- [x] Wire `/resume-extract` → real AI scoring pipeline (LLM/keyword analysis)
+- [x] Connect `ScoreCardUI` to live results instead of sample data
+- [ ] **Redis resume store** — write the uploaded file + extracted text to Redis with a
+      short **TTL**, keeping resume data permanently out of MongoDB
+      *(design decided; a `redis-server` is already running on `:6379` — the client
+      library still needs to be added to `App-Backend/package.json`)*
 - [ ] Persist analysis history per user and show score-over-time trends
 - [ ] PDF download / shareable report link
 - [ ] Real drag-and-drop + drop-zone highlight (`.drag-over` is already styled)
@@ -284,10 +329,17 @@ npm run dev        # → http://localhost:5174
 
 ## ⚠️ Known Limitations
 
-- **Port collision** — both Express servers bind to `3000`. Run **one at a time**, or move
-  one to another port and update the `fetch` URLs in `app1.tsx`.
-- The score dashboard currently renders **sample data**; the AI scoring step isn't connected yet.
+- ~~Port collision~~ — **resolved**: the auth API listens on `3001` and the
+  document API on `3000`, so both Express servers run **at the same time**
+  (needed for login/signup → `/App`). Vite ports are pinned with `strictPort`
+  (`med_learn` → `5173`, `med_app` → `5174`) so the redirect target can't drift.
+- ~~Sample dashboard data~~ — **resolved**: `ScoreCardUI` renders the live
+  `/resume-extract` payload, validated by `isResumeAnalysis()` before render.
 - `.env` values are required or the auth server will not start.
+- **Redis resume storage is designed but not yet wired** — no Redis client exists in
+  `App-Backend/package.json` and `REDIS_URL` is not read yet. Today a resume is uploaded to
+  `App-Backend/uploads/`, extracted, and **deleted** (`fs.unlink`) — it is written to neither
+  Redis nor MongoDB. Connect the Redis client to complete the design above.
 
 ---
 
